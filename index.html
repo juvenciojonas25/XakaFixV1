@@ -1,2157 +1,1707 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XakaFix - Serviços Rápidos em Maputo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #FF6B35;
-            --primary-dark: #E85A2B;
-            --secondary: #2D3047;
-            --accent: #4D96FF;
-            --accent-light: #6BC5FF;
-            --light: #F8F9FA;
-            --gray: #6C757D;
-            --gray-light: #E9ECEF;
-            --white: #FFFFFF;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --radius: 16px;
-            --radius-small: 8px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Dark Mode Variables */
-        [data-theme="dark"] {
-            --primary: #FF8B5C;
-            --primary-dark: #FF6B35;
-            --secondary: #F0F2F5;
-            --accent: #6BC5FF;
-            --accent-light: #8BD5FF;
-            --light: #1E1F2E;
-            --gray: #A0A4B8;
-            --gray-light: #2D3047;
-            --white: #252736;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.35);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--secondary);
-            background-color: var(--white);
-            overflow-x: hidden;
-            transition: var(--transition);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header / Navbar - Moderno */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        header.scrolled {
-            padding: 5px 0;
-            backdrop-filter: blur(10px);
-            background-color: rgba(var(--white-rgb), 0.95);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            transition: var(--transition);
-        }
-
-        header.scrolled .navbar {
-            padding: 10px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.5rem;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-
-        .logo-text span:first-child {
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-
-        .logo-text span:last-child {
-            font-size: 0.8rem;
-            color: var(--gray);
-            font-weight: 400;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-link {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-            border: none;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-accent {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            color: var(--white);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-accent:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Theme Toggle Button */
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            color: var(--secondary);
-            font-size: 1.3rem;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--gray-light);
-            transform: rotate(30deg);
-        }
-
-        /* Mobile Menu Button (Hamburguer) */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
-        }
-
-        .mobile-menu-btn span {
-            width: 100%;
-            height: 3px;
-            background-color: var(--secondary);
-            border-radius: 3px;
-            transition: var(--transition);
-            transform-origin: left center;
-        }
-
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translateY(-2px);
-        }
-
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translateY(2px);
-        }
-
-        /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            backdrop-filter: blur(5px);
-        }
-
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
-            background-color: var(--white);
-            z-index: 1000;
-            transition: var(--transition);
-            padding: 100px 30px 30px;
-            overflow-y: auto;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .mobile-nav .nav-link {
-            padding: 12px 0;
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .mobile-actions {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .mobile-actions .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .mobile-theme-toggle {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background-color: var(--gray-light);
-            border-radius: var(--radius);
-            margin-top: 20px;
-            color: var(--secondary);
-            font-weight: 500;
-        }
-
-        /* Hero Section - Impactante */
-        .hero {
-            padding: 160px 0 100px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(77, 150, 255, 0.05) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-theme="dark"] .hero {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(77, 150, 255, 0.1) 100%);
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(77, 150, 255, 0.1) 100%);
-            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-            z-index: 0;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-
-        .hero-text h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 40px;
-            max-width: 90%;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-top: 5px;
-        }
-
-        .hero-search {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow-hover);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .search-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-        }
-
-        .search-input {
-            padding: 16px 20px;
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius);
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--white);
-            color: var(--secondary);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .hero-illustration {
-            position: relative;
-            text-align: center;
-        }
-
-        .illustration-img {
-            max-width: 100%;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-hover);
-            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
-            transition: var(--transition);
-        }
-
-        .illustration-img:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-        }
-
-        /* Services Section */
-        .section {
-            padding: 100px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary);
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(77, 150, 255, 0.1) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 2rem;
-            color: var(--primary);
-            transition: var(--transition);
-        }
-
-        .service-card:hover .service-icon {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: var(--white);
-            transform: scale(1.1);
-        }
-
-        .service-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .service-card p {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        .service-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: var(--transition);
-        }
-
-        .service-link:hover {
-            color: var(--accent);
-            gap: 10px;
-        }
-
-        /* How It Works Section */
-        .steps-section {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(77, 150, 255, 0.05) 100%);
-        }
-
-        [data-theme="dark"] .steps-section {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(77, 150, 255, 0.1) 100%);
-        }
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .step {
-            text-align: center;
-            padding: 40px 30px;
-            border-radius: var(--radius);
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .step:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .step-number {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .step-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(77, 150, 255, 0.1) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        .step h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .step p {
-            color: var(--gray);
-        }
-
-        /* Professionals Section */
-        .professionals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .professional-card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .professional-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .professional-header {
-            padding: 30px 30px 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(77, 150, 255, 0.05) 100%);
-        }
-
-        .professional-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--white);
-            box-shadow: var(--shadow);
-        }
-
-        .professional-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-            color: var(--secondary);
-        }
-
-        .professional-info p {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .rating {
-            color: #FFC107;
-            font-size: 0.9rem;
-        }
-
-        .professional-details {
-            padding: 20px 30px;
-        }
-
-        .detail-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-        }
-
-        .detail-label {
-            color: var(--gray);
-        }
-
-        .detail-value {
-            font-weight: 500;
-            color: var(--secondary);
-        }
-
-        .price {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-
-        .professional-actions {
-            padding: 0 30px 30px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-small {
-            padding: 12px 20px;
-            font-size: 0.9rem;
-            flex: 1;
-            text-align: center;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: var(--white);
-            text-align: center;
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23ffffff" opacity="0.1"/></svg>');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-content h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .cta-content p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0.9;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn-white {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-
-        .btn-white:hover {
-            background-color: var(--light);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-transparent {
-            background-color: transparent;
-            border: 2px solid var(--white);
-            color: var(--white);
-        }
-
-        .btn-transparent:hover {
-            background-color: var(--white);
-            color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--secondary);
-            color: var(--white);
-            padding: 80px 0 30px;
-        }
-
-        [data-theme="dark"] footer {
-            background-color: #1A1B2E;
-        }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 50px;
-            margin-bottom: 50px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: var(--white);
-            position: relative;
-            display: inline-block;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(5px);
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 1.2rem;
-        }
-
-        .social-icons a:hover {
-            background-color: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--white);
-            text-decoration: none;
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.5rem;
-        }
-
-        /* Modal de Login/Signup */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            width: 90%;
-            max-width: 500px;
-            box-shadow: var(--shadow-hover);
-            transform: translateY(50px);
-            opacity: 0;
-            transition: var(--transition);
-            overflow: hidden;
-        }
-
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .modal-header {
-            padding: 30px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: var(--white);
-            text-align: center;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .modal-header h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .modal-tabs {
-            display: flex;
-            margin-bottom: -1px;
-        }
-
-        .modal-tab {
-            flex: 1;
-            padding: 15px;
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
-        }
-
-        .modal-tab.active {
-            color: var(--white);
-            border-bottom-color: var(--white);
-        }
-
-        .modal-content {
-            padding: 40px;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--secondary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius);
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--white);
-            color: var(--secondary);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-        }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        .form-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .form-link:hover {
-            color: var(--accent);
-        }
-
-        .modal-footer {
-            padding: 20px 40px 40px;
-            text-align: center;
-            color: var(--gray);
-            border-top: 1px solid var(--gray-light);
-        }
-
-        .modal-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--white);
-            color: var(--secondary);
-            padding: 15px 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-hover);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 10000;
-            transform: translateX(150%);
-            transition: transform 0.4s ease;
-            max-width: 350px;
-        }
-        
-        .toast.show {
-            transform: translateX(0);
-        }
-        
-        .toast i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        /* Responsividade */
-        @media (max-width: 992px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 40px;
-            }
-
-            .hero-text p {
-                max-width: 100%;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .nav-menu,
-            .nav-actions {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .hero-text h1 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 140px 0 80px;
-            }
-
-            .hero-text h1 {
-                font-size: 2.3rem;
-            }
-
-            .section {
-                padding: 80px 0;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .search-row {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .cta-content h2 {
-                font-size: 2.2rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .services-grid,
-            .professionals-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .professional-actions {
-                flex-direction: column;
-            }
-
-            .mobile-menu {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XakaFix · Serviços rápidos em Maputo</title>
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- RESET & VARIÁVEIS ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #f9fafb;
+      --surface-2: #f3f4f6;
+      --border: #e5e7eb;
+      --text-primary: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --brand: #e35f21;
+      --brand-light: #f97316;
+      --brand-soft: #fff2eb;
+      --accent: #2563eb;
+      --accent-soft: #eef2ff;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --radius-sm: 10px;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition: 0.2s ease;
+    }
+
+    body[data-theme="dark"] {
+      --bg: #0f1117;
+      --surface: #181b23;
+      --surface-2: #1e212b;
+      --border: #2a2e3a;
+      --text-primary: #f1f3f7;
+      --text-secondary: #b0b7c9;
+      --text-muted: #7a8296;
+      --brand: #ff7b3d;
+      --brand-light: #ff9b5c;
+      --brand-soft: #2a1d14;
+      --accent: #4f8aff;
+      --accent-soft: #1c253f;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+      --shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      transition: background 0.3s, color 0.2s;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- TIPOGRAFIA ---------- */
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* ---------- BOTÕES & ELEMENTOS ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: var(--font);
+      background: transparent;
+      color: var(--text-primary);
+      line-height: 1;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-light);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--border);
+      color: var(--text-primary);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--brand);
+      background: var(--brand-soft);
+      color: var(--brand);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: #3b82f6;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .btn-icon:hover {
+      background: var(--surface-2);
+    }
+
+    /* ---------- HEADER ---------- */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .header.scrolled {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--text-primary);
+    }
+
+    .logo i {
+      color: var(--brand);
+      font-size: 1.8rem;
+    }
+
+    .logo span {
+      font-weight: 600;
+    }
+
+    .logo small {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: -2px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color var(--transition);
+      position: relative;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--brand);
+    }
+
+    .nav-menu a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--brand);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      width: 32px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: 0.2s;
+    }
+
+    /* ---------- MOBILE MENU ---------- */
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 1001;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 300px;
+      height: 100vh;
+      background: var(--bg);
+      z-index: 1002;
+      padding: 96px 24px 32px;
+      transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu .nav-menu {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .mobile-menu .nav-menu a {
+      font-size: 1.1rem;
+      padding: 8px 0;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      padding: 140px 0 80px;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--brand);
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 90%;
+      margin-bottom: 32px;
+    }
+
+    .hero-search-card {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-row input,
+    .search-row select {
+      flex: 1 1 200px;
+      padding: 14px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 40px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: 0.15s;
+    }
+
+    .search-row input:focus,
+    .search-row select:focus {
+      outline: none;
+      border-color: var(--brand);
+      background: var(--bg);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .stat-item h4 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-item p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .hero-image {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: var(--surface-2);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.02);
+    }
+
+    /* ---------- SECÇÕES ---------- */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* SERVIÇOS */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      border-color: var(--brand);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+    }
+
+    .service-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .service-link {
+      color: var(--brand);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.15s;
+    }
+
+    .service-link:hover {
+      gap: 12px;
+    }
+
+    /* COMO FUNCIONA */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 32px 24px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: 0.2s;
+    }
+
+    .step:hover {
+      background: var(--bg);
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--brand);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto 20px;
+    }
+
+    .step h3 {
+      margin-bottom: 12px;
+      font-size: 1.25rem;
+    }
+
+    .step p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* PROFISSIONAIS */
+    .professionals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .pro-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .pro-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--brand);
+    }
+
+    .pro-header {
+      padding: 24px 24px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pro-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
+
+    .pro-info h4 {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .pro-info .pro-role {
+      color: var(--brand);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .rating {
+      color: #fbbf24;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    .pro-details {
+      padding: 16px 24px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: var(--text-muted);
+    }
+
+    .detail-value {
+      font-weight: 500;
+    }
+
+    .price {
+      color: var(--brand);
+      font-weight: 600;
+    }
+
+    .pro-actions {
+      display: flex;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .pro-actions .btn {
+      flex: 1;
+      padding: 12px 12px;
+      font-size: 0.9rem;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(110deg, var(--brand) 0%, #f97316 100%);
+      color: white;
+      padding: 80px 0;
+      border-radius: 0;
+    }
+
+    .cta-content {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    .cta-content p {
+      font-size: 1.15rem;
+      margin-bottom: 32px;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--brand);
+    }
+
+    .btn-white:hover {
+      background: #f3f4f6;
+      color: var(--brand);
+    }
+
+    .btn-transparent {
+      background: transparent;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      color: white;
+    }
+
+    .btn-transparent:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: white;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 64px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .footer-logo i {
+      color: var(--brand);
+    }
+
+    .footer-col p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-col h5 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-links a:hover {
+      color: var(--brand);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      color: var(--text-secondary);
+      transition: 0.15s;
+      text-decoration: none;
+    }
+
+    .social-icons a:hover {
+      background: var(--brand);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ---------- MODAL ---------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      width: 90%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      transform: scale(0.96);
+      transition: transform 0.2s;
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 28px 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h3 {
+      font-size: 1.5rem;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: 0.15s;
+    }
+
+    .modal-close:hover {
+      background: var(--surface-2);
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 20px 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-tab {
+      padding: 12px 16px;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: 0.15s;
+      font-size: 0.95rem;
+    }
+
+    .modal-tab.active {
+      color: var(--brand);
+      border-bottom-color: var(--brand);
+    }
+
+    .modal-body {
+      padding: 24px 28px 28px;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-secondary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.95rem;
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: 0.15s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--brand);
+      background: var(--bg);
+    }
+
+    .modal-footer {
+      padding: 20px 28px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* ---------- TOAST ---------- */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 3000;
+      transform: translateY(120%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+      font-size: 0.95rem;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    .toast i {
+      color: var(--brand);
+      font-size: 1.2rem;
+    }
+
+    /* ---------- RESPONSIVO ---------- */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero p {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .nav-menu, .nav-actions {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2.6rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .hero-search-card {
+        padding: 20px;
+      }
+
+      .search-row {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .cta-buttons .btn {
+        width: 100%;
+      }
+
+      .modal {
+        width: 95%;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header / Navbar -->
-    <header id="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span>XakaFix</span>
-                        <span>Serviços Rápidos em Maputo</span>
-                    </div>
-                </a>
-                
-                <div class="nav-links">
-                    <ul class="nav-menu">
-                        <li><a href="#home" class="nav-link active">Início</a></li>
-                        <li><a href="#services" class="nav-link">Serviços</a></li>
-                        <li><a href="#how-it-works" class="nav-link">Como Funciona</a></li>
-                        <li><a href="#professionals" class="nav-link">Profissionais</a></li>
-                        <li><a href="#contact" class="nav-link">Contacto</a></li>
-                    </ul>
-                    
-                    <div class="nav-actions">
-                        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                        <button class="btn btn-outline" id="loginBtn">
-                            <i class="fas fa-sign-in-alt"></i>
-                            Entrar
-                        </button>
-                        <button class="btn btn-primary" id="signupBtn">
-                            <i class="fas fa-user-plus"></i>
-                            Cadastrar
-                        </button>
-                    </div>
-                </div>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-nav">
-            <a href="#home" class="nav-link active">Início</a>
-            <a href="#services" class="nav-link">Serviços</a>
-            <a href="#how-it-works" class="nav-link">Como Funciona</a>
-            <a href="#professionals" class="nav-link">Profissionais</a>
-            <a href="#contact" class="nav-link">Contacto</a>
-            
-            <div class="mobile-actions">
-                <button class="btn btn-outline" id="mobileLoginBtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Entrar
-                </button>
-                <button class="btn btn-primary" id="mobileSignupBtn">
-                    <i class="fas fa-user-plus"></i>
-                    Cadastrar
-                </button>
-            </div>
-            
-            <div class="mobile-theme-toggle">
-                <i class="fas fa-moon"></i>
-                <span>Modo Escuro</span>
-                <label class="theme-switch">
-                    <input type="checkbox" id="mobileThemeToggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="#" class="logo">
+          <i class="fas fa-tools"></i>
+          <span>XakaFix</span>
+          <small>Maputo</small>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#home" class="active">Início</a></li>
+          <li><a href="#services">Serviços</a></li>
+          <li><a href="#how">Como funciona</a></li>
+          <li><a href="#professionals">Profissionais</a></li>
+          <li><a href="#contact">Contacto</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button class="btn-icon" id="themeToggle" aria-label="Tema">
+            <i class="fas fa-moon"></i>
+          </button>
+          <button class="btn btn-outline" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Entrar
+          </button>
+          <button class="btn btn-primary" id="signupBtn">
+            <i class="fas fa-user-plus"></i> Criar conta
+          </button>
         </div>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
     </div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Encontre <span>serviços rápidos</span> em Maputo quando precisar</h1>
-                    <p>Conectamos você aos melhores profissionais locais. De reparações a serviços especializados, encontre ajuda confiável em poucos cliques.</p>
-                    
-                    <div class="hero-search">
-                        <div class="search-row">
-                            <input type="text" class="search-input" placeholder="Qual serviço você precisa? (ex: canalizador, eletricista...)">
-                            <select class="search-input">
-                                <option value="">Maputo (todos os bairros)</option>
-                                <option value="baixa">Baixa</option>
-                                <option value="sommerschield">Sommerschield</option>
-                                <option value="polana">Polana</option>
-                                <option value="museu">Museu</option>
-                                <option value="coop">Coop</option>
-                                <option value="matola">Matola</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary btn-accent">
-                            <i class="fas fa-search"></i>
-                            Encontrar Serviço Agora
-                        </button>
-                    </div>
-                    
-                    <div class="hero-buttons">
-                        <button class="btn btn-outline">
-                            <i class="fas fa-play-circle"></i>
-                            Ver Como Funciona
-                        </button>
-                        <button class="btn btn-accent">
-                            <i class="fas fa-briefcase"></i>
-                            Sou Profissional
-                        </button>
-                    </div>
-                    
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Profissionais</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2.5k+</div>
-                            <div class="stat-label">Serviços Concluídos</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">4.8</div>
-                            <div class="stat-label">Avaliação Média</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="hero-illustration">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Profissional trabalhando" class="illustration-img">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="section" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Serviços Populares</h2>
-                <p>Encontre profissionais qualificados para resolver qualquer problema</p>
-            </div>
-            
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Eletricista</h3>
-                    <p>Instalações, reparações elétricas, montagem de quadros e muito mais.</p>
-                    <a href="#" class="service-link">
-                        Encontrar profissional
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-faucet"></i>
-                    </div>
-                    <h3>Canalizador</h3>
-                    <p>Reparação de fugas, instalação de canalizações, desentupimentos.</p>
-                    <a href="#" class="service-link">
-                        Encontrar profissional
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-car"></i>
-                    </div>
-                    <h3>Mecânico</h3>
-                    <p>Reparação de veículos, manutenção preventiva, troca de peças.</p>
-                    <a href="#" class="service-link">
-                        Encontrar profissional
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop"></i>
-                    </div>
-                    <h3>Informática</h3>
-                    <p>Reparação de computadores, redes, suporte técnico e manutenção.</p>
-                    <a href="#" class="service-link">
-                        Encontrar profissional
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-paint-roller"></i>
-                    </div>
-                    <h3>Pintura</h3>
-                    <p>Pintura residencial e comercial, preparação de superfícies.</p>
-                    <a href="#" class="service-link">
-                        Encontrar profissional
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-hammer"></i>
-                    </div>
-                    <h3>Construção</h3>
-                    <p>Pequenas obras, reparações, alvenaria e reformas em geral.</p>
-                    <a href="#" class="service-link">
-                        Encontrar profissional
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="section steps-section" id="how-it-works">
-        <div class="container">
-            <div class="section-title">
-                <h2>Como Funciona</h2>
-                <p>Contrate um profissional em apenas 3 passos simples</p>
-            </div>
-            
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>Pesquise o Serviço</h3>
-                    <p>Digite o serviço que precisa e sua localização em Maputo. Encontre profissionais perto de você.</p>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <h3>Escolha o Profissional</h3>
-                    <p>Veja avaliações, preços e disponibilidade. Selecione o profissional que melhor atende suas necessidades.</p>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <h3>Agende e Relaxe</h3>
-                    <p>Contrate e agende o serviço. O profissional vai até você e resolve seu problema.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Professionals Section -->
-    <section class="section" id="professionals">
-        <div class="container">
-            <div class="section-title">
-                <h2>Profissionais em Destaque</h2>
-                <p>Profissionais bem avaliados disponíveis agora em Maputo</p>
-            </div>
-            
-            <div class="professionals-grid">
-                <!-- Professional 1 -->
-                <div class="professional-card">
-                    <div class="professional-header">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="João Macuácua" class="professional-avatar">
-                        <div class="professional-info">
-                            <h3>João Macuácua</h3>
-                            <p>Eletricista</p>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>4.7 (48 avaliações)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="professional-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Preço médio:</span>
-                            <span class="detail-value price">800 MZN</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Distância:</span>
-                            <span class="detail-value">2.3 km</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Disponibilidade:</span>
-                            <span class="detail-value" style="color: #28a745;"><i class="fas fa-circle" style="font-size: 0.7rem;"></i> Imediata</span>
-                        </div>
-                    </div>
-                    
-                    <div class="professional-actions">
-                        <button class="btn btn-outline btn-small">
-                            <i class="fas fa-user"></i>
-                            Ver perfil
-                        </button>
-                        <button class="btn btn-primary btn-small">
-                            <i class="fas fa-comment"></i>
-                            Contactar
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Professional 2 -->
-                <div class="professional-card">
-                    <div class="professional-header">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Muianga" class="professional-avatar">
-                        <div class="professional-info">
-                            <h3>Ana Muianga</h3>
-                            <p>Canalizadora</p>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <span>5.0 (36 avaliações)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="professional-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Preço médio:</span>
-                            <span class="detail-value price">650 MZN</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Distância:</span>
-                            <span class="detail-value">1.8 km</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Disponibilidade:</span>
-                            <span class="detail-value" style="color: #28a745;"><i class="fas fa-circle" style="font-size: 0.7rem;"></i> Imediata</span>
-                        </div>
-                    </div>
-                    
-                    <div class="professional-actions">
-                        <button class="btn btn-outline btn-small">
-                            <i class="fas fa-user"></i>
-                            Ver perfil
-                        </button>
-                        <button class="btn btn-primary btn-small">
-                            <i class="fas fa-comment"></i>
-                            Contactar
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Professional 3 -->
-                <div class="professional-card">
-                    <div class="professional-header">
-                        <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Carlos Sitoe" class="professional-avatar">
-                        <div class="professional-info">
-                            <h3>Carlos Sitoe</h3>
-                            <p>Mecânico</p>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <span>4.2 (72 avaliações)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="professional-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Preço médio:</span>
-                            <span class="detail-value price">1.200 MZN</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Distância:</span>
-                            <span class="detail-value">3.5 km</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Disponibilidade:</span>
-                            <span class="detail-value" style="color: #fd7e14;"><i class="fas fa-circle" style="font-size: 0.7rem;"></i> Amanhã</span>
-                        </div>
-                    </div>
-                    
-                    <div class="professional-actions">
-                        <button class="btn btn-outline btn-small">
-                            <i class="fas fa-user"></i>
-                            Ver perfil
-                        </button>
-                        <button class="btn btn-primary btn-small">
-                            <i class="fas fa-comment"></i>
-                            Contactar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section" id="contact">
-        <div class="cta-bg"></div>
-        <div class="container">
-            <div class="cta-content">
-                <h2>Pronto para resolver seus problemas?</h2>
-                <p>Junte-se a milhares de pessoas em Maputo que já encontraram a ajuda que precisavam através do XakaFix.</p>
-                
-                <div class="cta-buttons">
-                    <button class="btn btn-white btn-large" id="ctaFindService">
-                        <i class="fas fa-search"></i>
-                        Encontrar serviço agora
-                    </button>
-                    <button class="btn btn-transparent btn-large" id="ctaBecomePro">
-                        <i class="fas fa-briefcase"></i>
-                        Tornar-se profissional
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-column">
-                    <a href="#" class="footer-logo">
-                        <div class="logo-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <span>XakaFix</span>
-                    </a>
-                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; line-height: 1.7;">
-                        Conectando você aos melhores profissionais locais em Maputo, Moçambique. Serviços rápidos, confiáveis e de qualidade.
-                    </p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Serviços</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Eletricista</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Canalizador</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Mecânico</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Informática</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pintura</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Construção</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Empresa</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Sobre nós</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Como funciona</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Tornar-se profissional</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Carreiras</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contacto</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Suporte</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Ajuda & FAQ</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Termos de uso</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Política de privacidade</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Segurança</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Avaliações</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Reclamações</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>© 2023 XakaFix. Todos os direitos reservados.</p>
-                <p>Maputo, Moçambique | contacto@xakafix.co.mz | +258 84 123 4567</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal de Login/Signup -->
-    <div class="modal-overlay" id="authModal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" id="modalClose">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h2>Bem-vindo ao XakaFix</h2>
-                <div class="modal-tabs">
-                    <button class="modal-tab active" data-tab="login">Entrar</button>
-                    <button class="modal-tab" data-tab="signup">Cadastrar</button>
-                </div>
-            </div>
-            
-            <div class="modal-content">
-                <!-- Login Tab -->
-                <div class="tab-content active" id="loginTab">
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="loginEmail">Email ou Telefone</label>
-                            <input type="text" id="loginEmail" class="form-control" placeholder="seu@email.com ou 84 123 4567" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="loginPassword">Senha</label>
-                            <input type="password" id="loginPassword" class="form-control" placeholder="Digite sua senha" required>
-                        </div>
-                        
-                        <div class="form-footer">
-                            <a href="#" class="form-link">Esqueceu a senha?</a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-sign-in-alt"></i>
-                                Entrar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Signup Tab -->
-                <div class="tab-content" id="signupTab">
-                    <form id="signupForm">
-                        <div class="form-group">
-                            <label for="signupName">Nome Completo</label>
-                            <input type="text" id="signupName" class="form-control" placeholder="Seu nome completo" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="signupEmail">Email</label>
-                            <input type="email" id="signupEmail" class="form-control" placeholder="seu@email.com" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="signupPhone">Telefone</label>
-                            <input type="tel" id="signupPhone" class="form-control" placeholder="84 123 4567" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="signupPassword">Senha</label>
-                            <input type="password" id="signupPassword" class="form-control" placeholder="Crie uma senha segura" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="signupUserType">Sou:</label>
-                            <select id="signupUserType" class="form-control" required>
-                                <option value="">Selecione uma opção</option>
-                                <option value="client">Cliente (preciso de serviços)</option>
-                                <option value="professional">Profissional (ofereço serviços)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-footer">
-                            <div></div>
-                            <button type="submit" class="btn btn-accent">
-                                <i class="fas fa-user-plus"></i>
-                                Criar Conta
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <p>Ao criar uma conta, você concorda com nossos <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>.</p>
-            </div>
-        </div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul class="nav-menu">
+      <li><a href="#home" class="active">Início</a></li>
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="#how">Como funciona</a></li>
+      <li><a href="#professionals">Profissionais</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <div class="mobile-actions">
+      <button class="btn btn-outline" id="mobileLoginBtn">
+        <i class="fas fa-sign-in-alt"></i> Entrar
+      </button>
+      <button class="btn btn-primary" id="mobileSignupBtn">
+        <i class="fas fa-user-plus"></i> Criar conta
+      </button>
     </div>
+  </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Modo escuro ativado!</span>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1>Serviços rápidos e <span>confiáveis</span> em Maputo</h1>
+          <p>Encontre eletricistas, canalizadores, mecânicos e muito mais. Profissionais avaliados, preços transparentes, agendamento imediato.</p>
+
+          <div class="hero-search-card">
+            <div class="search-row">
+              <input type="text" id="searchService" placeholder="Ex: eletricista, canalizador...">
+              <select id="searchLocation">
+                <option value="">Todos os bairros</option>
+                <option>Baixa</option>
+                <option>Sommerschield</option>
+                <option>Polana</option>
+                <option>Museu</option>
+                <option>Coop</option>
+                <option>Matola</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" id="searchHeroBtn">
+              <i class="fas fa-search"></i> Procurar agora
+            </button>
+          </div>
+
+          <div class="hero-buttons">
+            <button class="btn btn-outline" id="howItWorksBtn">
+              <i class="fas fa-play-circle"></i> Como funciona
+            </button>
+            <button class="btn btn-accent" id="becomeProBtn">
+              <i class="fas fa-briefcase"></i> Sou profissional
+            </button>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <h4>500+</h4>
+              <p>Profissionais</p>
+            </div>
+            <div class="stat-item">
+              <h4>2.5k+</h4>
+              <p>Serviços concluídos</p>
+            </div>
+            <div class="stat-item">
+              <h4>4.8</h4>
+              <p>Avaliação média</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Profissional a trabalhar">
+        </div>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // Sistema de tema claro/escuro
-        const themeToggle = document.getElementById('themeToggle');
-        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        const body = document.body;
-        
-        // Verificar preferência salva ou do sistema
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme === 'system' ? (systemPrefersDark ? 'dark' : 'light') : savedTheme;
-        
-        // Aplicar tema inicial
-        if (initialTheme === 'dark') {
-            enableDarkMode();
+  <!-- SERVIÇOS -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>Serviços mais procurados</h2>
+        <p>Encontre ajuda especializada para o que precisa, sem complicação.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card" data-service="Eletricista">
+          <div class="service-icon"><i class="fas fa-bolt"></i></div>
+          <h3>Eletricista</h3>
+          <p>Instalações, reparações, quadros elétricos e emergências.</p>
+          <span class="service-link">Encontrar profissional <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" data-service="Canalizador">
+          <div class="service-icon"><i class="fas fa-faucet"></i></div>
+          <h3>Canalizador</h3>
+          <p>Fugas, desentupimentos, instalação de tubagens e acessórios.</p>
+          <span class="service-link">Encontrar profissional <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" data-service="Mecânico">
+          <div class="service-icon"><i class="fas fa-car"></i></div>
+          <h3>Mecânico</h3>
+          <p>Manutenção preventiva, reparações e diagnóstico automóvel.</p>
+          <span class="service-link">Encontrar profissional <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" data-service="Informática">
+          <div class="service-icon"><i class="fas fa-laptop"></i></div>
+          <h3>Informática</h3>
+          <p>Reparação de computadores, redes, suporte técnico e software.</p>
+          <span class="service-link">Encontrar profissional <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" data-service="Pintura">
+          <div class="service-icon"><i class="fas fa-paint-roller"></i></div>
+          <h3>Pintura</h3>
+          <p>Pintura interior e exterior, preparação de superfícies.</p>
+          <span class="service-link">Encontrar profissional <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" data-service="Construção">
+          <div class="service-icon"><i class="fas fa-hammer"></i></div>
+          <h3>Construção</h3>
+          <p>Pequenas obras, reparações, alvenaria e remodelações.</p>
+          <span class="service-link">Encontrar profissional <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section" id="how" style="background: var(--surface);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Como funciona</h2>
+        <p>Contratar um profissional nunca foi tão simples.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Pesquise o serviço</h3>
+          <p>Diga o que precisa e onde está. Mostramos profissionais perto de si.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Escolha o profissional</h3>
+          <p>Compare avaliações, preços e disponibilidade. Escolha o melhor para si.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Agende e relaxe</h3>
+          <p>O profissional vai até você e resolve o problema. Pagamento seguro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFISSIONAIS -->
+  <section class="section" id="professionals">
+    <div class="container">
+      <div class="section-header">
+        <h2>Profissionais em destaque</h2>
+        <p>Avaliações reais de clientes em Maputo.</p>
+      </div>
+
+      <div class="professionals-grid">
+        <!-- Profissional 1 -->
+        <div class="pro-card">
+          <div class="pro-header">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="João Macuácua" class="pro-avatar">
+            <div class="pro-info">
+              <h4>João Macuácua</h4>
+              <div class="pro-role">Eletricista</div>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                <span style="color: var(--text-muted); margin-left: 6px;">4.7 (48)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pro-details">
+            <div class="detail-row"><span class="detail-label">Preço médio</span><span class="detail-value price">800 MZN</span></div>
+            <div class="detail-row"><span class="detail-label">Distância</span><span class="detail-value">2.3 km</span></div>
+            <div class="detail-row"><span class="detail-label">Disponibilidade</span><span class="detail-value" style="color: var(--success);"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> Imediata</span></div>
+          </div>
+          <div class="pro-actions">
+            <button class="btn btn-outline btn-small"><i class="fas fa-user"></i> Perfil</button>
+            <button class="btn btn-primary btn-small contact-pro-btn"><i class="fas fa-comment"></i> Contactar</button>
+          </div>
+        </div>
+
+        <!-- Profissional 2 -->
+        <div class="pro-card">
+          <div class="pro-header">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Muianga" class="pro-avatar">
+            <div class="pro-info">
+              <h4>Ana Muianga</h4>
+              <div class="pro-role">Canalizadora</div>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <span style="color: var(--text-muted); margin-left: 6px;">5.0 (36)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pro-details">
+            <div class="detail-row"><span class="detail-label">Preço médio</span><span class="detail-value price">650 MZN</span></div>
+            <div class="detail-row"><span class="detail-label">Distância</span><span class="detail-value">1.8 km</span></div>
+            <div class="detail-row"><span class="detail-label">Disponibilidade</span><span class="detail-value" style="color: var(--success);"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> Imediata</span></div>
+          </div>
+          <div class="pro-actions">
+            <button class="btn btn-outline btn-small"><i class="fas fa-user"></i> Perfil</button>
+            <button class="btn btn-primary btn-small contact-pro-btn"><i class="fas fa-comment"></i> Contactar</button>
+          </div>
+        </div>
+
+        <!-- Profissional 3 -->
+        <div class="pro-card">
+          <div class="pro-header">
+            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Carlos Sitoe" class="pro-avatar">
+            <div class="pro-info">
+              <h4>Carlos Sitoe</h4>
+              <div class="pro-role">Mecânico</div>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                <span style="color: var(--text-muted); margin-left: 6px;">4.2 (72)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pro-details">
+            <div class="detail-row"><span class="detail-label">Preço médio</span><span class="detail-value price">1.200 MZN</span></div>
+            <div class="detail-row"><span class="detail-label">Distância</span><span class="detail-value">3.5 km</span></div>
+            <div class="detail-row"><span class="detail-label">Disponibilidade</span><span class="detail-value" style="color: var(--warning);"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> Amanhã</span></div>
+          </div>
+          <div class="pro-actions">
+            <button class="btn btn-outline btn-small"><i class="fas fa-user"></i> Perfil</button>
+            <button class="btn btn-primary btn-small contact-pro-btn"><i class="fas fa-comment"></i> Contactar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Pronto para resolver o seu problema?</h2>
+        <p>Junte-se a milhares de pessoas em Maputo que já encontraram ajuda através do XakaFix.</p>
+        <div class="cta-buttons">
+          <button class="btn btn-white" id="ctaFindService"><i class="fas fa-search"></i> Procurar serviço</button>
+          <button class="btn btn-transparent" id="ctaBecomePro"><i class="fas fa-briefcase"></i> Ser profissional</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#" class="footer-logo">
+            <i class="fas fa-tools"></i> XakaFix
+          </a>
+          <p>Serviços rápidos e confiáveis em Maputo. Conectamos você aos melhores profissionais locais.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Serviços</h5>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size: 0.6rem;"></i> Eletricista</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size: 0.6rem;"></i> Canalizador</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size: 0.6rem;"></i> Mecânico</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right" style="font-size: 0.6rem;"></i> Informática</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Empresa</h5>
+          <ul class="footer-links">
+            <li><a href="#">Sobre nós</a></li>
+            <li><a href="#">Como funciona</a></li>
+            <li><a href="#">Carreiras</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Suporte</h5>
+          <ul class="footer-links">
+            <li><a href="#">Central de ajuda</a></li>
+            <li><a href="#">Termos de uso</a></li>
+            <li><a href="#">Privacidade</a></li>
+            <li><a href="#">Segurança</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 XakaFix. Todos os direitos reservados. Maputo, Moçambique.</p>
+        <p style="margin-top: 6px;">contacto@xakafix.co.mz · +258 84 123 4567</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL DE AUTENTICAÇÃO -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Bem-vindo</h3>
+        <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="login">Entrar</button>
+        <button class="modal-tab" data-tab="signup">Criar conta</button>
+      </div>
+      <div class="modal-body">
+        <!-- Login -->
+        <div class="tab-pane active" id="loginPane">
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">Email ou telefone</label>
+              <input type="text" id="loginEmail" class="form-control" placeholder="exemplo@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Palavra-passe</label>
+              <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+            <div style="text-align: center; margin-top: 12px;">
+              <a href="#" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none;">Esqueceu a palavra-passe?</a>
+            </div>
+          </form>
+        </div>
+        <!-- Signup -->
+        <div class="tab-pane" id="signupPane">
+          <form id="signupForm">
+            <div class="form-group">
+              <label for="signupName">Nome completo</label>
+              <input type="text" id="signupName" class="form-control" placeholder="O seu nome" required>
+            </div>
+            <div class="form-group">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" class="form-control" placeholder="exemplo@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="signupPhone">Telefone</label>
+              <input type="tel" id="signupPhone" class="form-control" placeholder="84 123 4567" required>
+            </div>
+            <div class="form-group">
+              <label for="signupPassword">Palavra-passe</label>
+              <input type="password" id="signupPassword" class="form-control" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            <div class="form-group">
+              <label for="signupUserType">Sou:</label>
+              <select id="signupUserType" class="form-control" required>
+                <option value="">Selecione</option>
+                <option value="client">Cliente (quero contratar)</option>
+                <option value="professional">Profissional (quero oferecer)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-accent" style="width: 100%;">Criar conta</button>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 16px; text-align: center;">Ao criar conta, aceita os Termos de Uso e Política de Privacidade.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Mensagem</span>
+  </div>
+
+  <script>
+    (function() {
+      // ----- ESTADO DO TEMA -----
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = themeToggle.querySelector('i');
+      const savedTheme = localStorage.getItem('theme') || 'light';
+
+      function setTheme(theme) {
+        if (theme === 'dark') {
+          document.body.setAttribute('data-theme', 'dark');
+          themeIcon.classList.remove('fa-moon');
+          themeIcon.classList.add('fa-sun');
+        } else {
+          document.body.removeAttribute('data-theme');
+          themeIcon.classList.remove('fa-sun');
+          themeIcon.classList.add('fa-moon');
         }
-        
-        // Alternar tema
-        themeToggle.addEventListener('click', toggleTheme);
-        if (mobileThemeToggle) {
-            mobileThemeToggle.addEventListener('click', toggleTheme);
+        localStorage.setItem('theme', theme);
+      }
+
+      setTheme(savedTheme);
+
+      themeToggle.addEventListener('click', () => {
+        const current = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(current);
+        showToast(current === 'dark' ? 'Modo escuro ativado' : 'Modo claro ativado');
+      });
+
+      // ----- HEADER SCROLL -----
+      const header = document.getElementById('header');
+      window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 20);
+      });
+
+      // ----- MENU MOBILE -----
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      function openMobileMenu() {
+        mobileMenuBtn.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileMenu() {
+        mobileMenuBtn.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu();
+      });
+      mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+      document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+      });
+
+      // ----- MODAL -----
+      const authModal = document.getElementById('authModal');
+      const modalClose = document.getElementById('modalClose');
+      const modalTabs = document.querySelectorAll('.modal-tab');
+      const loginPane = document.getElementById('loginPane');
+      const signupPane = document.getElementById('signupPane');
+      const modalTitle = document.getElementById('modalTitle');
+
+      function openModal(tab = 'login') {
+        authModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        switchTab(tab);
+      }
+
+      function closeModal() {
+        authModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function switchTab(tabName) {
+        modalTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
+        loginPane.classList.toggle('active', tabName === 'login');
+        signupPane.classList.toggle('active', tabName === 'signup');
+        modalTitle.textContent = tabName === 'login' ? 'Bem-vindo de volta' : 'Criar conta';
+      }
+
+      modalTabs.forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+      });
+
+      modalClose.addEventListener('click', closeModal);
+      authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) closeModal();
+      });
+
+      // Botões que abrem modal
+      document.getElementById('loginBtn').addEventListener('click', () => openModal('login'));
+      document.getElementById('signupBtn').addEventListener('click', () => openModal('signup'));
+      document.getElementById('mobileLoginBtn').addEventListener('click', () => { closeMobileMenu(); openModal('login'); });
+      document.getElementById('mobileSignupBtn').addEventListener('click', () => { closeMobileMenu(); openModal('signup'); });
+      document.getElementById('ctaFindService').addEventListener('click', () => openModal('signup'));
+      document.getElementById('ctaBecomePro').addEventListener('click', () => {
+        openModal('signup');
+        setTimeout(() => {
+          document.getElementById('signupUserType').value = 'professional';
+        }, 200);
+      });
+
+      // Botões "contactar" dos profissionais
+      document.querySelectorAll('.contact-pro-btn').forEach(btn => {
+        btn.addEventListener('click', () => openModal('login'));
+      });
+
+      // Formulários
+      document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        closeModal();
+        showToast('Login efetuado com sucesso. Redirecionando...');
+      });
+
+      document.getElementById('signupForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const tipo = document.getElementById('signupUserType').value;
+        closeModal();
+        if (tipo === 'professional') {
+          showToast('Conta profissional criada! Entraremos em contacto.');
+        } else {
+          showToast('Conta criada com sucesso. Bem-vindo!');
         }
-        
-        function toggleTheme() {
-            if (body.getAttribute('data-theme') === 'dark') {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
-            
-            // Atualizar toggle mobile
-            if (mobileThemeToggle) {
-                mobileThemeToggle.checked = body.getAttribute('data-theme') === 'dark';
-            }
+      });
+
+      // ----- TOAST -----
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+
+      function showToast(msg) {
+        toastMessage.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(window.toastTimeout);
+        window.toastTimeout = setTimeout(() => toast.classList.remove('show'), 2800);
+      }
+
+      // ----- PESQUISA -----
+      const searchService = document.getElementById('searchService');
+      const searchLocation = document.getElementById('searchLocation');
+      const searchHeroBtn = document.getElementById('searchHeroBtn');
+
+      searchHeroBtn.addEventListener('click', () => {
+        const termo = searchService.value.trim();
+        const local = searchLocation.value;
+        if (!termo) {
+          showToast('Digite o serviço que procura.');
+          return;
         }
-        
-        function enableDarkMode() {
-            body.setAttribute('data-theme', 'dark');
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-            localStorage.setItem('theme', 'dark');
-            showToast('Modo escuro ativado!');
-        }
-        
-        function disableDarkMode() {
-            body.removeAttribute('data-theme');
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-            localStorage.setItem('theme', 'light');
-            showToast('Modo claro ativado!');
-        }
-        
-        // Mobile Menu Hamburguer
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const mobileMenu = document.getElementById('mobileMenu');
-        
-        function openMobileMenu() {
-            mobileMenuBtn.classList.add('active');
-            mobileMenuOverlay.classList.add('active');
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeMobileMenu() {
-            mobileMenuBtn.classList.remove('active');
-            mobileMenuOverlay.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            if (mobileMenuBtn.classList.contains('active')) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
+        showToast(`A procurar "${termo}" ${local ? 'em ' + local : 'em Maputo'}...`);
+      });
+
+      // Cartões de serviço preenchem o campo de pesquisa
+      document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.service-link')) return; // se clicar no link, deixa o link padrão
+          const service = card.dataset.service || card.querySelector('h3').textContent;
+          searchService.value = service;
+          document.querySelector('.hero-search-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
-        
-        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-        
-        // Fechar menu mobile ao clicar em um link
-        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-        
-        // Header Scroll Effect
-        const header = document.getElementById('header');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-        
-        // Modal Functionality
-        const authModal = document.getElementById('authModal');
-        const modalClose = document.getElementById('modalClose');
-        const modalTabs = document.querySelectorAll('.modal-tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        // Open modal functions
-        function openAuthModal(tab = 'login') {
-            authModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Switch to specified tab
-            switchTab(tab);
-        }
-        
-        // Close modal
-        function closeAuthModal() {
-            authModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Switch between tabs
-        function switchTab(tabName) {
-            // Update tabs
-            modalTabs.forEach(tab => {
-                if (tab.dataset.tab === tabName) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-            
-            // Update content
-            tabContents.forEach(content => {
-                if (content.id === `${tabName}Tab`) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
-                }
-            });
-        }
-        
-        // Event Listeners for modal
-        modalTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                switchTab(tab.dataset.tab);
-            });
-        });
-        
-        modalClose.addEventListener('click', closeAuthModal);
-        authModal.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                closeAuthModal();
-            }
-        });
-        
-        // Open modal from various buttons
-        document.getElementById('loginBtn').addEventListener('click', () => openAuthModal('login'));
-        document.getElementById('signupBtn').addEventListener('click', () => openAuthModal('signup'));
-        document.getElementById('mobileLoginBtn').addEventListener('click', () => {
-            closeMobileMenu();
-            openAuthModal('login');
-        });
-        document.getElementById('mobileSignupBtn').addEventListener('click', () => {
-            closeMobileMenu();
-            openAuthModal('signup');
-        });
-        document.getElementById('ctaFindService').addEventListener('click', () => openAuthModal('signup'));
-        document.getElementById('ctaBecomePro').addEventListener('click', () => {
-            openAuthModal('signup');
-            // Auto-select professional option
-            setTimeout(() => {
-                document.getElementById('signupUserType').value = 'professional';
-            }, 300);
-        });
-        
-        // Form submissions
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        // O link em si também preenche
+        const link = card.querySelector('.service-link');
+        if (link) {
+          link.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('Login realizado com sucesso! Redirecionando...');
-            closeAuthModal();
-        });
-        
-        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            searchService.value = card.dataset.service || card.querySelector('h3').textContent;
+            document.querySelector('.hero-search-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        }
+      });
+
+      // Botão "como funciona" faz scroll
+      document.getElementById('howItWorksBtn').addEventListener('click', () => {
+        document.getElementById('how').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // Botão "sou profissional"
+      document.getElementById('becomeProBtn').addEventListener('click', () => {
+        openModal('signup');
+        setTimeout(() => {
+          document.getElementById('signupUserType').value = 'professional';
+        }, 200);
+      });
+
+      // Smooth scroll para links âncora
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const target = document.querySelector(targetId);
+          if (target) {
             e.preventDefault();
-            
-            const userType = document.getElementById('signupUserType').value;
-            if (userType === 'professional') {
-                alert('Conta de profissional criada! Em breve entraremos em contacto para validação.');
-            } else {
-                alert('Conta criada com sucesso! Bem-vindo ao XakaFix.');
-            }
-            
-            closeAuthModal();
+            const offset = 80;
+            const pos = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top: pos, behavior: 'smooth' });
+            // Active link
+            document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll(`.nav-menu a[href="${targetId}"]`).forEach(a => a.classList.add('active'));
+          }
         });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update active nav link
-                    document.querySelectorAll('.nav-link').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                }
-            });
+      });
+
+      // Observador de secção ativa (opcional)
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-menu a');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        const scrollY = window.scrollY + 100;
+        sections.forEach(section => {
+          if (scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
+            current = section.getAttribute('id');
+          }
         });
-        
-        // Service cards interaction
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                if (!e.target.closest('.service-link')) {
-                    const serviceName = card.querySelector('h3').textContent;
-                    document.querySelector('.search-input').value = serviceName;
-                    window.scrollTo({
-                        top: document.querySelector('.hero-search').offsetTop - 120,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
         });
-        
-        // Professional contact buttons
-        document.querySelectorAll('.professional-actions .btn-primary').forEach(button => {
-            button.addEventListener('click', () => {
-                openAuthModal('login');
-            });
-        });
-        
-        // Search functionality
-        document.querySelector('.btn-primary.btn-accent').addEventListener('click', () => {
-            const service = document.querySelector('.search-input').value;
-            const location = document.querySelector('select.search-input').value;
-            
-            if (!service.trim()) {
-                openAuthModal('signup');
-                return;
-            }
-            
-            if (service.trim()) {
-                alert(`Buscando ${service} em ${location || 'Maputo'}...`);
-                // In a real app, this would redirect to search results
-            }
-        });
-        
-        // Toast Notification System
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toastMessage');
-        
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Initialize with header check
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        }
-        
-        // Update mobile theme toggle
-        if (mobileThemeToggle) {
-            mobileThemeToggle.checked = body.getAttribute('data-theme') === 'dark';
-        }
-    </script>
+      });
+
+      // Ativar link inicial
+      if (!window.location.hash) {
+        document.querySelector('.nav-menu a[href="#home"]')?.classList.add('active');
+      }
+    })();
+  </script>
 </body>
 </html>
